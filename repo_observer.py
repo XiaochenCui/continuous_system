@@ -49,7 +49,7 @@ def poll():
             raise Exception("Could not update and check repository. Reason: %s" % e.output)
 
         if os.path.isfile(".commit_id"):
-            commit_file = open("results", "r")
+            commit_file = open(".commit_id", "r")
             commit_id = commit_file.read()
             print('new commit polled: {commit}'.format(commit=commit_id))
             # great, we have a change
