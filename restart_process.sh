@@ -2,4 +2,4 @@
 
 source run_or_fail.sh
 
-run_or_fail "Fail to restart process $1" restart $1
+run_or_fail "Fail to restart process $1" sudo restart $1
