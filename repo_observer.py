@@ -1,11 +1,24 @@
 import argparse
 import os
 import subprocess
+import logging
 from configparser import ConfigParser
 from time import sleep
 
+import sys
+
 
 def poll():
+    # 配置日志
+    logging.basicConfig(
+        filename='ci.log',
+        level=logging.DEBUG,
+        format='%(levelname)s:%(asctime)s:%(message)s'
+    )
+    log = open("ci.log", "a")
+    sys.stdout = log
+    sys.stderr = log
+
     parser = argparse.ArgumentParser()
     # metavar - A name for the argument in usage messages.
     parser.add_argument("--ini",
@@ -24,8 +37,8 @@ def poll():
     config_file = args.ini
     config = ConfigParser()
     config.read(config_file)
-    repo = config.get('repo') if not args.repo else args.repo
-    process = config.get('process') if not args.process else args.process
+    repo = config.get('ci', 'repo') if not args.repo else args.repo
+    process = config.get('ci', 'process') if not args.process else args.process
     while True:
         try:
             # call the bash script that will update the repo and check
