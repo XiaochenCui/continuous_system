@@ -1,6 +1,7 @@
 import argparse
 import os
 import subprocess
+from time import sleep
 
 
 def poll():
@@ -14,6 +15,7 @@ def poll():
                         metavar="PROCESS",
                         type=str,
                         help="process that should be restart")
+
     args = parser.parse_args()
     while True:
         try:
@@ -30,3 +32,8 @@ def poll():
                 subprocess.check_output(["./restart_process.sh", args.process])
             except subprocess.CalledProcessError as e:
                 raise Exception("Fail to restart process {process}".format(process=args.process))
+
+        sleep(10)
+
+if __name__ == "__main__":
+    poll()
